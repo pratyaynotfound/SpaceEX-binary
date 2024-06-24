@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<sspaceex xmlns="http://www-verimag.imag.fr/xml-namespaces/sspaceex" version="0.2" math="SpaceEx">
+  <component id="oscillator_template">
+    <param name="x" type="real" local="false" d1="1" d2="1" dynamics="any" />
+    <param name="y" type="real" local="true" d1="1" d2="1" dynamics="any" />
+    <param name="hop1" type="label" local="true" />
+    <param name="hop2" type="label" local="true" />
+    <param name="hop3" type="label" local="true" />
+    <param name="hop4" type="label" local="true" />
+    <param name="a1" type="real" local="false" d1="1" d2="1" dynamics="const" />
+    <param name="a2" type="real" local="false" d1="1" d2="1" dynamics="const" />
+    <param name="c" type="real" local="false" d1="1" d2="1" dynamics="const" />
+    <param name="x0" type="real" local="false" d1="1" d2="1" dynamics="const" />
+    <param name="z0" type="real" local="false" d1="1" d2="1" dynamics="const" />
+    <param name="t_count" type="real" local="false" d1="1" d2="1" dynamics="const" controlled="true"/>
+    <param name="bound" type="real" local="false" d1="1" d2="1" dynamics="const" controlled="true"/>
+    <location id="1" name="np" x="137.0" y="137.5" width="247.0" height="66.0">
+      <invariant>x&lt;=0 &amp; y &gt;= -c/x0*x</invariant>
+      <flow>x' == a1*x-a1*x0 &amp; y' == a2*y+a2*z0</flow>
+    </location>
+    <location id="2" name="nn" x="137.5" y="273.5" width="248.0" height="69.0">
+      <invariant>x&lt;=0 &amp; y &lt;= -c/x0*x</invariant>
+      <flow>x' == a1*x+a1*x0 &amp; y' == a2*y-a2*z0</flow>
+    </location>
+    <location id="3" name="pp" x="516.5" y="135.5" width="263.0" height="60.0">
+      <invariant>x&gt;=0 &amp; y &gt;= -c/x0*x</invariant>
+      <flow>x' == a1*x-a1*x0 &amp; y' == a2*y+a2*z0</flow>
+    </location>
+    <location id="4" name="pn" x="516.0" y="273.0" width="265.0" height="72.0">
+      <invariant>x&gt;=0 &amp; y &lt;= -c/x0*x</invariant>
+      <flow>x' == a1*x+a1*x0 &amp; y' == a2*y-a2*z0</flow>
+    </location>
+    <transition source="2" target="1">
+      <guard>t_count &lt; bound-1</guard>
+      <assignment>t_count = t_count + 1</assignment>
+      <label>hop1</label>
+      <labelposition x="-32.0" y="-24.0" />
+    </transition>
+    <transition source="1" target="3">
+      <guard>t_count &lt; bound-1</guard>
+      <assignment>t_count = t_count + 1</assignment>
+      <label>hop2</label>
+    </transition>
+    <transition source="3" target="4">
+      <guard>t_count &lt; bound-1</guard>
+      <assignment>t_count = t_count + 1</assignment>
+      <label>hop3</label>
+      <labelposition x="20.0" y="-24.0" />
+    </transition>
+    <transition source="4" target="2">
+      <guard>t_count &lt; bound-1</guard>
+      <assignment>t_count = t_count + 1</assignment>
+      <label>hop4</label>
+    </transition>
+  </component>
+  <component id="filter_t">
+    <param name="u" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="false" />
+    <param name="p" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true"/>
+    <param name="c" type="real" local="false" d1="1" d2="1" dynamics="const" />
+    <location id="1" name="always" x="149.5" y="136.0" width="159.0" height="92.0">
+      <flow>p'==c*p-c*u</flow>
+    </location>
+  </component>
+  <component id="osc_w_64th_order">
+    <param name="z" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x1" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x2" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x3" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="t_count" type="real" local="false" d1="1" d2="1" dynamics="const" controlled="true"/>
+    <param name="bound" type="real" local="false" d1="1" d2="1" dynamics="const" controlled="true"/>
+    <param name="x4" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x5" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x6" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x7" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x8" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x9" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x10" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x11" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x12" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x13" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x14" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x15" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x16" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x17" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x18" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x19" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x20" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x21" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x22" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x23" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x24" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x25" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x26" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x27" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x28" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x29" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x30" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x31" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x32" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x33" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x34" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x35" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x36" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x37" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x38" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x39" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x40" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x41" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x42" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x43" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x44" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x45" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x46" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x47" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x48" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x49" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x50" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x51" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x52" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x53" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x54" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x55" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x56" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x57" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x58" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x59" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x60" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x61" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x62" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="x63" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <bind component="filter_t" as="f1" x="188.0" y="42.0">
+      <map key="u">x</map>
+      <map key="p">x1</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f2" x="187.0" y="171.0">
+      <map key="u">x1</map>
+      <map key="p">x2</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f3" x="188.0" y="303.0">
+      <map key="u">x2</map>
+      <map key="p">x3</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f4" x="187.0" y="439.0">
+      <map key="u">x3</map>
+      <map key="p">x4</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f5" x="188.0" y="42.0">
+      <map key="u">x4</map>
+      <map key="p">x5</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f6" x="187.0" y="171.0">
+      <map key="u">x5</map>
+      <map key="p">x6</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f7" x="188.0" y="303.0">
+      <map key="u">x6</map>
+      <map key="p">x7</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f8" x="187.0" y="439.0">
+      <map key="u">x7</map>
+      <map key="p">x8</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f9" x="188.0" y="42.0">
+      <map key="u">x8</map>
+      <map key="p">x9</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f10" x="187.0" y="171.0">
+      <map key="u">x9</map>
+      <map key="p">x10</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f11" x="188.0" y="303.0">
+      <map key="u">x10</map>
+      <map key="p">x11</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f12" x="187.0" y="439.0">
+      <map key="u">x11</map>
+      <map key="p">x12</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f13" x="188.0" y="42.0">
+      <map key="u">x12</map>
+      <map key="p">x13</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f14" x="187.0" y="171.0">
+      <map key="u">x13</map>
+      <map key="p">x14</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f15" x="188.0" y="303.0">
+      <map key="u">x14</map>
+      <map key="p">x15</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f16" x="187.0" y="439.0">
+      <map key="u">x15</map>
+      <map key="p">x16</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f17" x="188.0" y="42.0">
+      <map key="u">x16</map>
+      <map key="p">x17</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f18" x="187.0" y="171.0">
+      <map key="u">x17</map>
+      <map key="p">x18</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f19" x="188.0" y="303.0">
+      <map key="u">x18</map>
+      <map key="p">x19</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f20" x="187.0" y="439.0">
+      <map key="u">x19</map>
+      <map key="p">x20</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f21" x="188.0" y="42.0">
+      <map key="u">x20</map>
+      <map key="p">x21</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f22" x="187.0" y="171.0">
+      <map key="u">x21</map>
+      <map key="p">x22</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f23" x="188.0" y="303.0">
+      <map key="u">x22</map>
+      <map key="p">x23</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f24" x="187.0" y="439.0">
+      <map key="u">x23</map>
+      <map key="p">x24</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f25" x="188.0" y="42.0">
+      <map key="u">x24</map>
+      <map key="p">x25</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f26" x="187.0" y="171.0">
+      <map key="u">x25</map>
+      <map key="p">x26</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f27" x="188.0" y="303.0">
+      <map key="u">x26</map>
+      <map key="p">x27</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f28" x="187.0" y="439.0">
+      <map key="u">x27</map>
+      <map key="p">x28</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f29" x="188.0" y="42.0">
+      <map key="u">x28</map>
+      <map key="p">x29</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f30" x="187.0" y="171.0">
+      <map key="u">x29</map>
+      <map key="p">x30</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f31" x="188.0" y="303.0">
+      <map key="u">x30</map>
+      <map key="p">x31</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f32" x="187.0" y="439.0">
+      <map key="u">x31</map>
+      <map key="p">x32</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f33" x="188.0" y="42.0">
+      <map key="u">x32</map>
+      <map key="p">x33</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f34" x="187.0" y="171.0">
+      <map key="u">x33</map>
+      <map key="p">x34</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f35" x="188.0" y="303.0">
+      <map key="u">x34</map>
+      <map key="p">x35</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f36" x="187.0" y="439.0">
+      <map key="u">x35</map>
+      <map key="p">x36</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f37" x="188.0" y="42.0">
+      <map key="u">x36</map>
+      <map key="p">x37</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f38" x="187.0" y="171.0">
+      <map key="u">x37</map>
+      <map key="p">x38</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f39" x="188.0" y="303.0">
+      <map key="u">x38</map>
+      <map key="p">x39</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f40" x="187.0" y="439.0">
+      <map key="u">x39</map>
+      <map key="p">x40</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f41" x="188.0" y="42.0">
+      <map key="u">x40</map>
+      <map key="p">x41</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f42" x="187.0" y="171.0">
+      <map key="u">x41</map>
+      <map key="p">x42</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f43" x="188.0" y="303.0">
+      <map key="u">x42</map>
+      <map key="p">x43</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f44" x="187.0" y="439.0">
+      <map key="u">x43</map>
+      <map key="p">x44</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f45" x="188.0" y="42.0">
+      <map key="u">x44</map>
+      <map key="p">x45</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f46" x="187.0" y="171.0">
+      <map key="u">x45</map>
+      <map key="p">x46</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f47" x="188.0" y="303.0">
+      <map key="u">x46</map>
+      <map key="p">x47</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f48" x="187.0" y="439.0">
+      <map key="u">x47</map>
+      <map key="p">x48</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f49" x="188.0" y="42.0">
+      <map key="u">x48</map>
+      <map key="p">x49</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f50" x="187.0" y="171.0">
+      <map key="u">x49</map>
+      <map key="p">x50</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f51" x="188.0" y="303.0">
+      <map key="u">x50</map>
+      <map key="p">x51</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f52" x="187.0" y="439.0">
+      <map key="u">x51</map>
+      <map key="p">x52</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f53" x="188.0" y="42.0">
+      <map key="u">x52</map>
+      <map key="p">x53</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f54" x="187.0" y="171.0">
+      <map key="u">x53</map>
+      <map key="p">x54</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f55" x="188.0" y="303.0">
+      <map key="u">x54</map>
+      <map key="p">x55</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f56" x="187.0" y="439.0">
+      <map key="u">x55</map>
+      <map key="p">x56</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f57" x="188.0" y="42.0">
+      <map key="u">x56</map>
+      <map key="p">x57</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f58" x="187.0" y="171.0">
+      <map key="u">x57</map>
+      <map key="p">x58</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f59" x="188.0" y="303.0">
+      <map key="u">x58</map>
+      <map key="p">x59</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f60" x="187.0" y="439.0">
+      <map key="u">x59</map>
+      <map key="p">x60</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f61" x="188.0" y="42.0">
+      <map key="u">x60</map>
+      <map key="p">x61</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f62" x="187.0" y="171.0">
+      <map key="u">x61</map>
+      <map key="p">x62</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f63" x="188.0" y="303.0">
+      <map key="u">x62</map>
+      <map key="p">x63</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="filter_t" as="f64" x="187.0" y="439.0">
+      <map key="u">x63</map>
+      <map key="p">z</map>
+      <map key="c">-5</map>
+    </bind>
+    <bind component="oscillator_template" as="osci" x="230.0" y="55.0">
+      <map key="x">x</map>
+      <map key="a1">-2</map>
+      <map key="a2">-1</map>
+      <map key="c">0.5</map>
+      <map key="x0">0.7</map>
+      <map key="z0">0.7</map>
+      <map key="t_count">t_count</map>
+      <map key="bound">bound</map>
+    </bind>
+  </component>
+</sspaceex>
+
